@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -9,6 +10,12 @@ export default function Main() {
     message: '',
   });
   const [isMessageSent, setIsMessageSent] = useState(false);
+
+  const socket = io(`${apiUrl}`);
+
+  socket.on('collectionChange', () => {
+    isMessageSent ? setIsMessageSent(false) : setIsMessageSent(true);
+  });
 
   useEffect(() => {
     const fetchMessage = async () => {
