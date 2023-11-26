@@ -72,6 +72,20 @@ export default function Main() {
     }
   };
 
+  const formattedDate = (createdAt) => {
+    const dateFromMongoDB = new Date(createdAt);
+    const newDate = dateFromMongoDB.toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+
+    return newDate;
+  };
+
   return (
     <main className="h-14 flex-grow bg-bgPrimary">
       <section className="m-6 flex h-[90%] flex-col justify-between bg-bgSecondary p-2">
@@ -89,7 +103,7 @@ export default function Main() {
                 >
                   <div>Name: {data.name}</div>
                   <div>Message: {data.message}</div>
-                  <div className="text-xs">{data.date}</div>
+                  <div className="text-xs">{formattedDate(data.createdAt)}</div>
                 </div>
               ))
             )}
