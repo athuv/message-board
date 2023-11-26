@@ -53,21 +53,50 @@ export default function Main() {
     }
   };
 
+  const handleClearClick = () => {
+    const deleteData = async () => {
+      const response = await fetch(`${apiUrl}/`, {
+        method: 'DELETE',
+        body: JSON.stringify(formData),
+      });
+
+      response.ok && isMessageSent
+        ? setIsMessageSent(false)
+        : setIsMessageSent(true);
+    };
+
+    try {
+      deleteData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <main className="h-14 flex-grow bg-bgPrimary">
       <section className="m-6 flex h-[90%] flex-col justify-between bg-bgSecondary p-2">
-        <div className="mb-3 flex-grow bg-tertiary p-2">
-          {message.length === 0
-            ? 'loading'
-            : message.map((data, index) => (
-                <div
-                  key={index}
-                  className="mt-2 flex h-fit flex-col border-l-4 border-bgPrimary p-2 text-fontPrimary"
-                >
-                  <div>Name: {data.name}</div>
-                  <div>Message: {data.message}</div>
-                </div>
-              ))}
+        <div className="mb-3 flex flex-grow flex-col justify-between bg-tertiary p-2">
+          <div>
+            {message.length === 0
+              ? 'loading'
+              : message.map((data, index) => (
+                  <div
+                    key={index}
+                    className="mt-2 flex h-fit flex-col border-l-4 border-bgPrimary p-2 text-fontPrimary"
+                  >
+                    <div>Name: {data.name}</div>
+                    <div>Message: {data.message}</div>
+                  </div>
+                ))}
+          </div>
+          <div className="self-center">
+            <button
+              onClick={handleClearClick}
+              className="hover: bg-bgSecondary p-2 text-fontPrimary hover:text-bgPrimary"
+            >
+              Clear All
+            </button>
+          </div>
         </div>
         <div>
           <form
