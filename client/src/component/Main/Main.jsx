@@ -89,6 +89,7 @@ export default function Main() {
                 >
                   <div>Name: {data.name}</div>
                   <div>Message: {data.message}</div>
+                  <div className="text-xs">{data.date}</div>
                 </div>
               ))
             )}
