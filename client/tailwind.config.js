@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        bgPrimary: '#706233',
-        bgSecondary: '#B0926A',
-        tertiary: '#E1C78F',
-        fontPrimary: '#FAE7C9',
+        bgPrimary: '#020617',
+        bgSecondary: '#1e293b',
+        tertiary: '#475569',
+        fontPrimary: '#cbd5e1',
       },
     },
   },
