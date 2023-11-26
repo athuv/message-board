@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
+import express from "express";
 
+var indexRouter = express.Router();
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+indexRouter.get("/", function (req, res, next) {
+  // res.render("index", { title: "Express" });
+  console.log("asd");
 });
 
-module.exports = router;
+export default indexRouter;
