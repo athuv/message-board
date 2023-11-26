@@ -43,4 +43,16 @@ indexRouter.post("/", function (req, res, next) {
   });
 });
 
+indexRouter.delete("/", function (req, res, next) {
+  const jsonData = JSON.stringify([], null, 2);
+  fs.writeFile(filePath, jsonData, "utf8", function (err) {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error deleting data");
+    } else {
+      res.send("Data deleted successfully");
+    }
+  });
+});
+
 export default indexRouter;
