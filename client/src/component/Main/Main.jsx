@@ -77,17 +77,21 @@ export default function Main() {
       <section className="m-6 flex h-[90%] flex-col justify-between bg-bgSecondary p-2">
         <div className="mb-3 flex flex-grow flex-col justify-between bg-tertiary p-2">
           <div>
-            {message.length === 0
-              ? 'loading'
-              : message.map((data, index) => (
-                  <div
-                    key={index}
-                    className="mt-2 flex h-fit flex-col border-l-4 border-bgPrimary p-2 text-fontPrimary"
-                  >
-                    <div>Name: {data.name}</div>
-                    <div>Message: {data.message}</div>
-                  </div>
-                ))}
+            {message.length === 0 ? (
+              <div className="mt-2 flex h-fit flex-col border-l-4 border-bgPrimary p-2 text-fontPrimary">
+                No Messages Available
+              </div>
+            ) : (
+              message.map((data, index) => (
+                <div
+                  key={index}
+                  className="mt-2 flex h-fit flex-col border-l-4 border-bgPrimary p-2 text-fontPrimary"
+                >
+                  <div>Name: {data.name}</div>
+                  <div>Message: {data.message}</div>
+                </div>
+              ))
+            )}
           </div>
           <div className="self-center">
             <button
