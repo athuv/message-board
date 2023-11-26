@@ -3,10 +3,12 @@
 /**
  * Module dependencies.
  */
-
+import "dotenv/config.js";
 import app from "../app.js";
 import http from "http";
 import debugLib from "debug";
+import connectToDb from "./db.js";
+
 const debug = debugLib("your-project-name:server");
 
 /**
@@ -81,6 +83,7 @@ function onError(error) {
  */
 
 function onListening() {
+  connectToDb();
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
