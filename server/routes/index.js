@@ -26,7 +26,7 @@ indexRouter.get("/", function (req, res, next) {
 });
 
 indexRouter.post("/", function (req, res, next) {
-  const formData = { ...req.body, formattedDate };
+  const formData = { ...req.body, date: formattedDate };
 
   fs.readFile(filePath, "utf8", function (err, data) {
     if (err) {
