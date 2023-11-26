@@ -1,4 +1,24 @@
+import { useState, useEffect } from 'react';
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function Main() {
+  const [message, setMessage] = useState([]);
+
+  useEffect(() => {
+    const fetchMessage = async () => {
+      const response = await fetch(`${apiUrl}/`);
+      const data = await response.json();
+      setMessage(data);
+    };
+
+    try {
+      fetchMessage();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
   };
@@ -7,15 +27,14 @@ export default function Main() {
     <main className="h-14 flex-grow bg-bgPrimary">
       <section className="m-6 flex h-[90%] flex-col justify-between bg-bgSecondary p-2">
         <div className="h-[80%] bg-tertiary p-2">
-          <div className="flex h-fit flex-col border-l-4 border-bgPrimary p-2 text-fontPrimary">
-            <div>Name: </div>
-            <div>Message:</div>
-          </div>
-
-          <div className="mt-2 flex h-fit flex-col border-l-4 border-bgPrimary p-2 text-fontPrimary">
-            <div>Name: </div>
-            <div>Message:</div>
-          </div>
+          {message.length === 0 ? (
+            'loading'
+          ) : (
+            <div className="flex h-fit flex-col border-l-4 border-bgPrimary p-2 text-fontPrimary">
+              <div>Name: </div>
+              <div>Message:</div>
+            </div>
+          )}
         </div>
         <div>
           <form
