@@ -7,7 +7,6 @@ import cors from "cors";
 
 const app = express();
 app.use(cors());
-
 const currentModuleURL = import.meta.url;
 
 app.use(logger("dev"));

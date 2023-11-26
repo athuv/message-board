@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 import "dotenv/config.js";
+import { Server } from "socket.io";
 import app from "../app.js";
 import http from "http";
 import debugLib from "debug";
@@ -23,6 +24,11 @@ app.set("port", port);
  */
 
 var server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -83,7 +89,7 @@ function onError(error) {
  */
 
 function onListening() {
-  connectToDb();
+  connectToDb(io);
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
