@@ -2,6 +2,7 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import Message from "../model/message.js";
 
 var indexRouter = express.Router();
 
@@ -15,49 +16,47 @@ const formattedDate = `${currentDate.getFullYear()}-${
 }-${currentDate.getDate()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
 
 indexRouter.get("/", function (req, res, next) {
-  fs.readFile(filePath, "utf8", function (err, data) {
-    if (err) {
-      console.error(err);
-    } else {
-      const jsonData = JSON.parse(data);
-      res.json(jsonData);
-    }
-  });
+  const getMessages = async () => {
+    const data = await Message.find({});
+    res.json(data);
+  };
+
+  try {
+    getMessages();
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 indexRouter.post("/", function (req, res, next) {
-  const formData = { ...req.body, date: formattedDate };
+  const saveMessage = async () => {
+    const newMessage = new Message({
+      name: req.body.name,
+      message: req.body.message,
+    });
+    const newMessageResult = await newMessage.save();
+    console.log(newMessageResult);
+  };
 
-  fs.readFile(filePath, "utf8", function (err, data) {
-    if (err) {
-      console.error(err);
-    } else {
-      const existingData = JSON.parse(data);
-      const updatedData = [...existingData, formData];
-      const jsonData = JSON.stringify(updatedData, null, 2);
-
-      fs.writeFile(filePath, jsonData, "utf8", function (err) {
-        if (err) {
-          console.error(err);
-          res.status(500).send("Error adding data");
-        } else {
-          res.send("Message sent successfully");
-        }
-      });
-    }
-  });
+  try {
+    saveMessage();
+    res.json("Message sent successfully");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 indexRouter.delete("/", function (req, res, next) {
-  const jsonData = JSON.stringify([], null, 2);
-  fs.writeFile(filePath, jsonData, "utf8", function (err) {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Error deleting data");
-    } else {
-      res.send("Data deleted successfully");
-    }
-  });
+  const deleteMessage = async () => {
+    await Message.deleteMany({});
+  };
+
+  try {
+    deleteMessage();
+    res.json("Data deleted successfully");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 export default indexRouter;

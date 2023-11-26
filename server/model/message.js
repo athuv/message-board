@@ -5,7 +5,10 @@ const Schema = mongoose.Schema;
 const MessageSchema = new Schema({
   name: { type: String, required: true, minLength: 2, maxLength: 10 },
   message: { type: String, required: true, minLength: 2, maxLength: 100 },
-  date: { type: Date },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-export default mongoose.model("Book", MessageSchema);
+export default mongoose.model("Message", MessageSchema);
