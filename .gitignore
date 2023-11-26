@@ -13,6 +13,7 @@
 ./client/*.local
 
 # ./server Logs
+./server/.env
 ./server/logs
 ./server/*.log
 ./server/npm-debug.log*
