@@ -9,6 +9,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const filePath = path.join(__dirname, "./messages.json");
 
+const currentDate = new Date();
+const formattedDate = `${currentDate.getFullYear()}-${
+  currentDate.getMonth() + 1
+}-${currentDate.getDate()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+
 indexRouter.get("/", function (req, res, next) {
   fs.readFile(filePath, "utf8", function (err, data) {
     if (err) {
@@ -21,7 +26,7 @@ indexRouter.get("/", function (req, res, next) {
 });
 
 indexRouter.post("/", function (req, res, next) {
-  const formData = req.body;
+  const formData = { ...req.body, formattedDate };
 
   fs.readFile(filePath, "utf8", function (err, data) {
     if (err) {
