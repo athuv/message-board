@@ -20,7 +20,7 @@
 ./server/yarn-error.log*
 ./server/pnpm-debug.log*
 ./server/lerna-debug.log*
-
+./server/routes/messages.json
 ./server/node_modules
 ./server/dist
 ./server/dist-ssr
@@ -45,3 +45,5 @@
 ./client/*.njsproj
 ./client/*.sln
 ./client/*.sw?
+server/routes/messages.json
+server/routes/messages.json
