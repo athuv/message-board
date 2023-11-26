@@ -89,8 +89,8 @@ export default function Main() {
   return (
     <main className="h-14 flex-grow bg-bgPrimary">
       <section className="m-6 flex h-[90%] flex-col justify-between bg-bgSecondary p-2">
-        <div className="mb-3 flex flex-grow flex-col justify-between bg-tertiary p-2">
-          <div>
+        <div className="mb-3 flex flex-grow flex-col justify-between overflow-auto bg-tertiary p-2">
+          <div className="">
             {message.length === 0 ? (
               <div className="mt-2 flex h-fit flex-col border-l-4 border-bgPrimary p-2 text-fontPrimary">
                 No Messages Available
