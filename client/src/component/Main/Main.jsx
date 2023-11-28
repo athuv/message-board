@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
+import Pusher from 'pusher-js';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -11,10 +11,13 @@ export default function Main() {
   });
   const [isMessageSent, setIsMessageSent] = useState(false);
 
-  const socket = io(`${apiUrl}`);
+  const pusher = new Pusher('65b8a194319229e518f4', {
+    cluster: 'ap2',
+  });
 
-  socket.on('collectionChange', () => {
-    isMessageSent ? setIsMessageSent(false) : setIsMessageSent(true);
+  const channel = pusher.subscribe('my-channel');
+  channel.bind('my-event', function (data) {
+    setMessage(data);
   });
 
   useEffect(() => {

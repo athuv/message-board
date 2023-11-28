@@ -1,8 +1,8 @@
 import express from "express";
-import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import Message from "../model/message.js";
+import Pusher from "pusher";
 
 var indexRouter = express.Router();
 
@@ -14,6 +14,21 @@ const currentDate = new Date();
 const formattedDate = `${currentDate.getFullYear()}-${
   currentDate.getMonth() + 1
 }-${currentDate.getDate()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+
+const pusher = new Pusher({
+  appId: "1715977",
+  key: "65b8a194319229e518f4",
+  secret: "03bebfd349f010a16b4c",
+  cluster: "ap2",
+  useTLS: true,
+});
+
+const messageChangeStream = Message.watch();
+
+messageChangeStream.on("change", async (change) => {
+  const data = await Message.find({});
+  pusher.trigger("my-channel", "my-event", data);
+});
 
 indexRouter.get("/", function (req, res, next) {
   const getMessages = async () => {
